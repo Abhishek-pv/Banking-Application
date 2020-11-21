@@ -1,0 +1,4 @@
+*.log
+*.out
+k8s.mak
+
