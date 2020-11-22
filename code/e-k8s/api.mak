@@ -19,7 +19,7 @@ CURL=curl
 # look these up with 'make ls'
 # You need to specify the container because istio injects side-car container
 # into each pod.
-# s1: service1; s2: service2; db: cmpt756db
+# s1: service1; s2: service2; a1: servicea1; db: cmpt756db
 PODS1=pod/cmpt756s1-8557865b4b-jnwrj
 PODCONT=service1
 
@@ -54,6 +54,11 @@ BODY_MUSIC= { \
   "SongTitle": "Song5" \
 }
 
+BODY_ACCOUNT= { \
+  "AccountType": "Savings", \
+  "Balance": 0 \
+}
+
 # this is a token for ???
 TOKEN=Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMDg1ODQ2NzItMjQxNi00NGQzLWIyZGMtZTVjOGUyMDY1ZTM3IiwidGltZSI6MTYwNDIwMjU0Ni41NTU5MjQ3fQ.slrQnX4y37db0h2g-hFjmK5cUzW9q8_ybRLEQRXbHLo
 BODY_TOKEN={ \
@@ -69,7 +74,7 @@ USER_ID2=4649d11f-fb66-4b88-acf4-463d6892e3a6
 MUSIC_ID2=c866db1f-03cd-4ae4-8944-79dbeb7e9426
 
 
-# POST is used for user (apipost) or music (apimusic) to create a new record
+# POST is used for user (apipost), music (apimusic) or account(apiaccount) to create a new record
 cuser:
 	echo curl --location --request POST 'http://$(IGW)/api/v1/user/' --header 'Content-Type: application/json' --data-raw '$(BODY_USER)' > cuser.out
 	$(CURL) --location --request POST 'http://$(IGW)/api/v1/user/' --header 'Content-Type: application/json' --data-raw '$(BODY_USER)' | tee -a cuser.out
@@ -77,18 +82,30 @@ cuser:
 cmusic:
 	echo curl --location --request POST 'http://$(IGW)/api/v1/music/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_MUSIC)' > cmusic.out
 	$(CURL) --location --request POST 'http://$(IGW)/api/v1/music/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_MUSIC)' | tee -a cmusic.out
+	
+caccount:
+	echo curl --location --request POST 'http://$(IGW)/api/v1/account/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_ACCOUNT)' > caccount.out
+	$(CURL) --location --request POST 'http://$(IGW)/api/v1/account/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_ACCOUNT)' | tee -a caccount.out
 
 # PUT is used for user (update) to update a record
 uuser:
 	echo curl --location --request PUT 'http://$(IGW)/api/v1/user/$(USER_ID)' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_USER)' > uuser.out
 	$(CURL) --location --request PUT 'http://$(IGW)/api/v1/user/$(USER_ID)' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_USER)' | tee -a uuser.out
+	
+uaccount:
+	echo curl --location --request PUT 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_USER)' > uaccount.out
+	$(CURL) --location --request PUT 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_USER)' | tee -a uaccount.out
 
 # GET is used with music to read a record
 rmusic:
 	echo curl --location --request GET 'http://$(IGW)/api/v1/music/$(MUSIC_ID)' --header '$(TOKEN)' > rmusic.out
 	$(CURL) --location --request GET 'http://$(IGW)/api/v1/music/$(MUSIC_ID)' --header '$(TOKEN)' | tee -a rmusic.out
+# GET is used with account to read a record
+rmusic:
+	echo curl --location --request GET 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' > raccount.out
+	$(CURL) --location --request GET 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' | tee -a raccount.out
 
-# DELETE is used with user or music to delete a record
+# DELETE is used with user, music or account to delete a record
 duser:
 	echo curl --location --request DELETE 'http://$(IGW)/api/v1/user/$(USER_ID2)' --header '$(TOKEN)' > duser.out
 	$(CURL) --location --request DELETE 'http://$(IGW)/api/v1/user/$(USER_ID2)' --header '$(TOKEN)' | tee -a duser.out
@@ -96,6 +113,10 @@ duser:
 dmusic:
 	echo curl --location --request DELETE 'http://$(IGW)/api/v1/music/$(MUSIC_ID2)' --header '$(TOKEN)' > dmusic.out
 	$(CURL) --location --request DELETE 'http://$(IGW)/api/v1/music/$(MUSIC_ID2)' --header '$(TOKEN)' | tee -a dmusic.out
+
+daccount:
+	echo curl --location --request DELETE 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' > daccount.out
+	$(CURL) --location --request DELETE 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' | tee -a daccount.out
 
 # PUT is used for login/logoff too
 apilogin:

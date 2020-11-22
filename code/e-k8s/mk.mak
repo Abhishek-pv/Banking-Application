@@ -22,7 +22,7 @@ IC=istioctl
 
 
 # these might need to change
-NS=cmpt756e4
+NS=cmpt756project
 CLUSTER=minikube
 CTX=minikube
 DRIVER=docker
@@ -57,7 +57,7 @@ extern: showcontext
 lb: showcontext
 	$(MK) tunnel
 
-# switch to the cmpt756e4 context quickly
+# switch to the cmpt756project context quickly
 cd:
 	$(KC) config use-context $(CTX)
 
@@ -65,7 +65,7 @@ cd:
 lsa: showcontext
 	$(KC) get svc --all-namespaces
 
-# show deploy and pods in current ns; svc of cmpt756e4 ns
+# show deploy and pods in current ns; svc of cmpt756project ns
 ls: showcontext
 	$(KC) get gw,deployments,pods
 	$(KC) -n $(NS) get svc
