@@ -40,13 +40,13 @@ IGW=127.0.0.1:80
 
 # stock body & fragment for API requests
 BODY_USER= { \
-"fname": "User2_updated", \
-"email": "user2_updated@abc.com", \
-"lname": "User_updated" \
+"fname": "Sanjana", \
+"email": "srchauha@sfu.ca", \
+"lname": "Chauhan" \
 }
 
 BODY_UID= { \
-    "uid": "08584672-2416-44d3-b2dc-e5c8e2065e37" \
+    "uid": "95c49e84-c65c-4328-b9b7-8242112bed91" \
 }
 
 BODY_MUSIC= { \
@@ -60,9 +60,9 @@ BODY_ACCOUNT= { \
 }
 
 # this is a token for ???
-TOKEN=Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMDg1ODQ2NzItMjQxNi00NGQzLWIyZGMtZTVjOGUyMDY1ZTM3IiwidGltZSI6MTYwNDIwMjU0Ni41NTU5MjQ3fQ.slrQnX4y37db0h2g-hFjmK5cUzW9q8_ybRLEQRXbHLo
+TOKEN=Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOTVjNDllODQtYzY1Yy00MzI4LWI5YjctODI0MjExMmJlZDkxIiwidGltZSI6MTYwNjExNTkyMC43MzI4Mjc0fQ.5GOAO48IAOqwRncL9K4t-qU-QK1kFspv6tOXMD6xwl0
 BODY_TOKEN={ \
-    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMDg1ODQ2NzItMjQxNi00NGQzLWIyZGMtZTVjOGUyMDY1ZTM3IiwidGltZSI6MTYwNDIwMjU0Ni41NTU5MjQ3fQ.slrQnX4y37db0h2g-hFjmK5cUzW9q8_ybRLEQRXbHLo" \
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOTVjNDllODQtYzY1Yy00MzI4LWI5YjctODI0MjExMmJlZDkxIiwidGltZSI6MTYwNjExNTkyMC43MzI4Mjc0fQ.5GOAO48IAOqwRncL9K4t-qU-QK1kFspv6tOXMD6xwl0" \
 }
 
 # keep these ones around

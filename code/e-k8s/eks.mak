@@ -27,7 +27,7 @@ CTX=srchauha-aws756
 
 NGROUP=worker-nodes
 NTYPE=t2.medium
-REGION=us-west-2
+REGION=us-west-1
 KVER=1.17
 
 
