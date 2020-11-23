@@ -29,13 +29,13 @@
           "TableName": "Account",
           "AttributeDefinitions": [
             {
-              "AttributeName": "account_no",
+              "AttributeName": "account_id",
               "AttributeType": "N"
             }
           ],
           "KeySchema": [
             {
-              "AttributeName": "account_no",
+              "AttributeName": "account_id",
               "KeyType": "HASH"
             }
           ],
