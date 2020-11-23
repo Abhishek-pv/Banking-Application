@@ -1,0 +1,73 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+      "tableTransaction": {
+        "Type": "AWS::DynamoDB::Table",
+        "Properties": {
+          "TableName": "Transaction",
+          "AttributeDefinitions" : [
+            {
+              "AttributeName" : "transaction_id",
+              "AttributeType" : "N"   
+            }
+          ],
+          "KeySchema" : [
+            {
+              "AttributeName" : "transaction_id",
+              "KeyType" : "HASH"
+            }
+          ],
+          "ProvisionedThroughput" : {
+            "ReadCapacityUnits" : "5",
+            "WriteCapacityUnits" : "5"
+          }
+        }
+      },
+      "tableAccount": {
+        "Type": "AWS::DynamoDB::Table",
+        "Properties": {
+          "TableName": "Account",
+          "AttributeDefinitions": [
+            {
+              "AttributeName": "account_no",
+              "AttributeType": "N"
+            }
+          ],
+          "KeySchema": [
+            {
+              "AttributeName": "account_no",
+              "KeyType": "HASH"
+            }
+          ],
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "5",
+            "WriteCapacityUnits": "5"
+          }
+        }
+      },
+      "tableUser": {
+        "Type": "AWS::DynamoDB::Table",
+        "Properties": {
+          "TableName": "User",
+          "AttributeDefinitions": [
+            {
+              "AttributeName": "user_id",
+              "AttributeType": "N"
+            }
+          ],
+          "KeySchema": [
+            {
+              "AttributeName": "user_id",
+              "KeyType": "HASH"
+            }
+          ],
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "5",
+            "WriteCapacityUnits": "5"
+          }
+        }
+      }
+
+    },
+    "Description": "DynamoDB"
+  }
