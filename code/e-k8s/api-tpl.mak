@@ -23,6 +23,11 @@ CURL=curl
 PODS1=pod/cmpt756s1-8557865b4b-jnwrj
 PODCONT=service1
 
+# show deploy and pods in current ns; svc of cmpt756e4 ns
+ls: showcontext
+	$(KC) get gw,deployments,pods
+	$(KC) -n $(NS) get svc
+
 logs:
 	$(KC) logs $(PODS1) -c $(PODCONT)
 
@@ -36,44 +41,38 @@ logs:
 #IGW=172.16.199.128:31413
 #IGW=10.96.57.211:80
 #IGW=a344add95f74b453684bcd29d1461240-517644147.us-east-1.elb.amazonaws.com:80
-IGW=127.0.0.1:80
+IGW=EXTERN
 
 # stock body & fragment for API requests
 BODY_USER= { \
-"fname": "SANJANA", \
-"email": "srchauha@sfu.ca", \
-"lname": "CHAUHAN" \
+"fname": "Sherlock", \
+"email": "sholmes@baker.org", \
+"lname": "Holmes" \
 }
 
 BODY_UID= { \
-    "uid": "192092f8-d34d-47cb-a1b1-c2252746867a" \
+    "uid": "0d2a2931-8be6-48fc-aa9e-5a0f9f536bd3" \
 }
 
 BODY_MUSIC= { \
-  "Artist": "Sanjana Chauhan", \
-  "SongTitle": "1D" \
-}
-
-BODY_ACCOUNT= { \
-  "AccountNumber": 111111111, \
-  "AccountType": "Checking", \
-  "Balance": 2500 \
+  "Artist": "Duran Duran", \
+  "SongTitle": "Rio" \
 }
 
 # this is a token for ???
-TOKEN=Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTkyMDkyZjgtZDM0ZC00N2NiLWExYjEtYzIyNTI3NDY4NjdhIiwidGltZSI6MTYwNjI0NzczOS40OTY1OTAxfQ.VrBGwmDo3bi_p8_H6f7clkKIv2dx1kfZBTrHVQY97Ik
+TOKEN=Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMDI3Yzk5ZWYtM2UxMi00ZmM5LWFhYzgtMTcyZjg3N2MyZDI0IiwidGltZSI6MTYwMTA3NDY0NC44MTIxNjg2fQ.hR5Gbw5t2VMpLcj8yDz1B6tcWsWCFNiHB_KHpvQVNls
 BODY_TOKEN={ \
-    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMTkyMDkyZjgtZDM0ZC00N2NiLWExYjEtYzIyNTI3NDY4NjdhIiwidGltZSI6MTYwNjI0NzczOS40OTY1OTAxfQ.VrBGwmDo3bi_p8_H6f7clkKIv2dx1kfZBTrHVQY97Ik" \
+    "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiMDI3Yzk5ZWYtM2UxMi00ZmM5LWFhYzgtMTcyZjg3N2MyZDI0IiwidGltZSI6MTYwMTA3NDY0NC44MTIxNjg2fQ.hR5Gbw5t2VMpLcj8yDz1B6tcWsWCFNiHB_KHpvQVNls" \
 }
 
 # keep these ones around
-USER_ID=192092f8-d34d-47cb-a1b1-c2252746867a
-MUSIC_ID=0492c457-2b7b-429e-aaea-496af829ebef
+USER_ID=0d2a2931-8be6-48fc-aa9e-5a0f9f536bd3
+MUSIC_ID=2995bc8b-d872-4dd1-b396-93fde2f4bfff
 
 # it's convenient to have a second set of id to test deletion (DELETE uses these id with the suffix of 2)
 USER_ID2=9175a76f-7c4d-4a3e-be57-65856c6bb77e
 MUISC_ID2=8ed63e4f-3b1e-47f8-beb8-3604516e5a2d
-ACCOUNT_ID=4f8576a7-d6d1-4e64-9878-d6dbfc8c487f 
+
 
 # POST is used for user (apipost) or music (apimusic) to create a new record
 cuser:
@@ -83,11 +82,6 @@ cuser:
 cmusic:
 	echo curl --location --request POST 'http://$(IGW)/api/v1/music/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_MUSIC)' > cmusic.out
 	$(CURL) --location --request POST 'http://$(IGW)/api/v1/music/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_MUSIC)' | tee -a cmusic.out
-
-caccount:
-	echo curl --location --request POST 'http://$(IGW)/api/v1/account/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_ACCOUNT)' > caccount.out
-	$(CURL) --location --request POST 'http://$(IGW)/api/v1/account/' --header '$(TOKEN)' --header 'Content-Type: application/json' --data-raw '$(BODY_ACCOUNT)' | tee -a caccount.out
-
 
 # PUT is used for user (update) to update a record
 uuser:
@@ -108,11 +102,6 @@ dmusic:
 	echo curl --location --request DELETE 'http://$(IGW)/api/v1/music/$(MUSIC_ID2)' --header '$(TOKEN)' > dmusic.out
 	$(CURL) --location --request DELETE 'http://$(IGW)/api/v1/music/$(MUSIC_ID2)' --header '$(TOKEN)' | tee -a dmusic.out
 
-
-daccount:
-	echo curl --location --request DELETE 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' > daccount.out
-	$(CURL) --location --request DELETE 'http://$(IGW)/api/v1/account/$(ACCOUNT_ID)' --header '$(TOKEN)' | tee -a daccount.out
-
 # PUT is used for login/logoff too
 apilogin:
 	echo curl --location --request PUT 'http://$(IGW)/api/v1/user/login' --header 'Content-Type: application/json' --data-raw '$(BODY_UID)' > apilogin.out
@@ -121,3 +110,8 @@ apilogin:
 apilogoff:
 	echo curl --location --request PUT 'http://$(IGW)/api/v1/user/logoff' --header 'Content-Type: application/json' --data-raw '$(BODY_TOKEN)' > apilogoff.out
 	$(CURL) --location --request PUT 'http://$(IGW)/api/v1/user/logoff' --header 'Content-Type: application/json' --data-raw '$(BODY_TOKEN)' | tee -a apilogoff.out
+
+
+showcontext:
+	$(KC) config get-contexts
+

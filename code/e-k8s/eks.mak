@@ -21,13 +21,13 @@ IC=istioctl
 
 # these might need to change
 NS=cmpt756e4
-CLUSTERNAME=srchauha-aws756
-CTX=srchauha-aws756
+CLUSTERNAME=aws756
+CTX=aws756
 
 
 NGROUP=worker-nodes
 NTYPE=t2.medium
-REGION=us-west-1
+REGION=us-east-1
 KVER=1.17
 
 
@@ -86,25 +86,7 @@ reinstate:
 	$(IC) install --set profile=demo | tee -a eks-reinstate.log
 
 setupdashboard:
-	echo Step 1: Deploy the Kubernetes Metrics Server
-	echo $(KC) apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
-	$(KC) apply -f https://github.com/kubernetes-sigs/metrics-server/releases/download/v0.3.6/components.yaml
-	echo $(KC) get deployment metrics-server -n kube-system
-	$(KC) get deployment metrics-server -n kube-system
-
-	echo Step 2: Deploy the Kubernetes dashboard
-	echo $(KC) apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
-	$(KC) apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
-	# If eks-admin-service-account.yaml file is in misc folder
-	echo Step 3: Create an eks-admin service account and cluster role binding
-	echo $(KC) apply -f misc/eks-admin-service-account.yaml
-	$(KC) apply -f misc/eks-admin-service-account.yaml
-
-	#Please uncomment to include Step 4
-	#echo Step 4: Connect to the dashboard
-	#echo $(KC) -n kube-system describe secret $($(KC) -n kube-system get secret | grep eks-admin | awk '{print $1}')
-	#$(KC) -n kube-system describe secret $($(KC) -n kube-system get secret | grep eks-admin | awk '{print $1}')
-
+	echo TODO
 	
 showcontext:
 	$(KC) config get-contexts

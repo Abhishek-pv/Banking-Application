@@ -1,2 +1,6 @@
-# tprj/code
-Directory for holding program code. For simplicity, place your container's entire content here though in a realistic scenario, you are more likely to marshall the contents of each container at build time.
+# sfu-cmpt756.203
+
+This is the course repo for CMPT 756 (Fall 2020)
+
+You will find resources for your exercises and term project here.
+

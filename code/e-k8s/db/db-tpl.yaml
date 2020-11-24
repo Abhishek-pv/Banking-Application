@@ -33,10 +33,10 @@ metadata:
   name: awscred
 type: Opaque
 stringData:
-  AWS_REGION: us-west-1
-  AWS_ACCESS_KEY_ID: AKIAJ6LWBRKZ3236O7SA
-  AWS_SECRET_ACCESS_KEY: +fNfQyudgMEbdbclqGn373niK+vzqfTdzDqt+fAy
-  #AWS_SESSION_TOKEN: your-session-token
+  AWS_REGION: us-east-1
+  AWS_ACCESS_KEY_ID: your-access-key
+  AWS_SECRET_ACCESS_KEY: your-secret-access-key
+  AWS_SESSION_TOKEN: your-session-token
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -68,7 +68,7 @@ spec:
       serviceAccountName: svc-db
       containers:
       - name: cmpt756db
-        image: docker.io/srchauha/cmpt756db:latest
+        image: docker.io/<YOURNAME>/cmpt756db:latest
         imagePullPolicy: Always
         envFrom:
         - secretRef:

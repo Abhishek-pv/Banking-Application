@@ -48,14 +48,14 @@ spec:
       version: v1
   template:
     metadata:
-      name: servicea1-pod
+      name: account-pod
       labels:
         app: cmpt756a1
         version: v1
     spec:
       serviceAccountName: svc-a1
       containers:
-      - name: servicea1
+      - name: account
         image: docker.io/srchauha/cmpt756a1:latest
         imagePullPolicy: Always
         ports:

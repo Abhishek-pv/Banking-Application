@@ -1,1 +1,1 @@
-minikube start --kubernetes-version=1.19.2 driver=docker mk-cluster.log
+minikube start --kubernetes-version=1.19.2 driver=Docker mk-cluster.log
