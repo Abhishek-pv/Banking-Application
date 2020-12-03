@@ -2,5 +2,5 @@
 *.out
 k8s.mak
 /istio-1.8.0
-/account
+
 
