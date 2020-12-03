@@ -1,0 +1,4 @@
+RUN	BasicSimulation	basicsimulation	1606586358718	 	3.4.2
+USER	Scenario Name = Create User	START	1606586360150
+REQUEST		POST	1606586360184	1606586360229	OK	 
+USER	Scenario Name = Create User	END	1606586360251

@@ -1,0 +1,6 @@
+RUN	BasicSimulation	basicsimulation	1607009378659	 	3.4.2
+USER	Your Scenario Name is => Create User and Login and Read Music	START	1607009380053
+REQUEST		Request Name = Create User POST	1607009380088	1607009380091	KO	j.n.ConnectException: Connection refused
+ERROR	Request Name = Login User PUT: Failed to build request: No attribute named 'user_id' is defined 	1607009380104
+REQUEST		Request Name = Read Music GET	1607009380105	1607009380106	KO	j.n.ConnectException: Connection refused
+USER	Your Scenario Name is => Create User and Login and Read Music	END	1607009380109

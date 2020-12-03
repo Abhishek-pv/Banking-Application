@@ -1,0 +1,5 @@
+RUN	BasicSimulation	basicsimulation	1606771545065	 	3.4.2
+USER	Your Scenario Name is => Create User and Login and Read Music	START	1606771546653
+REQUEST		Request Name = Create User POST	1606771546709	1606771547151	OK	 
+REQUEST		Request Name = Login User PUT	1606771547214	1606771547329	OK	 
+USER	Your Scenario Name is => Create User and Login and Read Music	END	1606771547334

@@ -1,0 +1,7 @@
+RUN	BasicSimulation	basicsimulation	1606768975845	 	3.4.2
+USER	Your Scenario Name is => Create User and Login and Update and Delete	START	1606768977162
+REQUEST		Request Name = Create User POST	1606768977190	1606768977739	OK	 
+REQUEST		Request Name = Login User PUT	1606768977788	1606768977899	OK	 
+REQUEST		Request Name = Update User PUT	1606768977910	1606768978028	OK	 
+REQUEST		Request Name = Delete User DELETE	1606768978029	1606768978168	OK	 
+USER	Your Scenario Name is => Create User and Login and Update and Delete	END	1606768978173

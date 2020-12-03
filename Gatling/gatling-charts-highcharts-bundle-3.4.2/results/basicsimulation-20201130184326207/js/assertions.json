@@ -1,0 +1,10 @@
+{
+  "simulation": "BasicSimulation",
+  "simulationId": "basicsimulation",
+  "start": 1606761806207,
+  "description": "",
+  "scenarios": ["Your Scenario Name is => Create User and Login"],
+  "assertions": [
+
+  ]
+}

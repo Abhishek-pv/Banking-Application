@@ -1,0 +1,10 @@
+{
+  "simulation": "BasicSimulation",
+  "simulationId": "basicsimulation",
+  "start": 1606621917020,
+  "description": "",
+  "scenarios": ["Users"],
+  "assertions": [
+
+  ]
+}
