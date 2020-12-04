@@ -60,6 +60,8 @@ def get_transaction(transaction_id):
 @bp.route('/', methods=['GET'])
 @bp.route('/', methods=['PUT'])
 def create_transaction():
+    headers = request.headers
+    # check header here
     if request.method == 'POST':
         try:
             content = request.get_json()
@@ -69,7 +71,7 @@ def create_transaction():
         except: 
             return json.dumps({"message": "error reading arguments"})
         url = db['name'] + '/' + db['endpoint'][1]
-        response = requests.post(url, json = {"objtype": "transaction", "TransactionType":TransactionType, "AccountId": AccountId, "Amount": Amount})
+        response0 = requests.post(url, json = {"objtype": "transaction", "TransactionType":TransactionType, "AccountId": AccountId, "Amount": Amount})
         amount = content['Amount']
         transactionType = content['TransactionType']
         payload = {"objtype": "account", "objkey": content['AccountId']}
@@ -85,7 +87,7 @@ def create_transaction():
             new_balance = balance - amount
         url = db['name'] + '/' + db['endpoint'][3]
         response = requests.put(url, params = {"objtype": "account", "objkey": account_id}, json = {"Balance": new_balance})
-        return (response.json())
+        return (response0.json())
 
 @bp.route('/<transaction_id>', methods=['DELETE'])
 def delete_transaction(transaction_id):
