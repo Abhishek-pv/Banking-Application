@@ -1,6 +1,0 @@
-RUN	BasicSimulation	basicsimulation	1606768292268	 	3.4.2
-USER	Your Scenario Name is => Create User and Login and Update	START	1606768293579
-REQUEST		Request Name = Create User POST	1606768293610	1606768294018	OK	 
-REQUEST		Request Name = Login User PUT	1606768294070	1606768294181	OK	 
-REQUEST		Request Name = Update User PUT	1606768294192	1606768294312	OK	 
-USER	Your Scenario Name is => Create User and Login and Update	END	1606768294317

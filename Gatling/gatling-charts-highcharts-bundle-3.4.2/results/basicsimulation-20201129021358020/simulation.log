@@ -1,4 +1,0 @@
-RUN	BasicSimulation	basicsimulation	1606616038020	 	3.4.2
-ERROR	Request Name = Create User POST: Failed to build request: No attribute named 'randfname' is defined 	1606616039464
-USER	Users	START	1606616039446
-USER	Users	END	1606616039472

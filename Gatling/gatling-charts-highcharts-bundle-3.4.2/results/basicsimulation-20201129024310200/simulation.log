@@ -1,4 +1,0 @@
-RUN	BasicSimulation	basicsimulation	1606617790200	 	3.4.2
-ERROR	Request Name = Create User POST: Failed to build request: No attribute named 'y' is defined 	1606617791581
-USER	Users	START	1606617791563
-USER	Users	END	1606617791589

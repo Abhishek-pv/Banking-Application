@@ -26,7 +26,9 @@ class BasicSimulation extends Simulation {
     Map(
       "randfname" -> (Random.nextInt(99)),
       "randlname" -> (Random.nextInt(99)),
-      "randemail" -> (Random.nextInt(99))
+      "randemail" -> (Random.nextInt(99)),
+      "IGW" -> ("127.0.0.1")
+      // "afc033ba1409146a1bf7531ecd5842ad-2083102065.us-west-1.elb.amazonaws.com"
     )
   )
 
@@ -36,26 +38,26 @@ class BasicSimulation extends Simulation {
 
   object CreateCustomer {
     val createcustomer = exec(http("Request Name = Create Customer POST")
-      .post("http://127.0.0.1:80/api/v1/customer/")
+      .post("http://${IGW}:80/api/v1/customer/")
       .header("content-type" , "application/json")
-      .body(StringBody(string = """{  "fname": "${randfname}" ,"email": ${randemail},"lname": ${randlname} }"""))
+      .body(StringBody(string = """{  "fname": "${randfname}" ,"email": "${randemail}","lname": "${randlname}" }"""))
       .check(status.not(404), status.not(500))
       .check(jsonPath("$..customer_id").ofType[String].saveAs("customer_id"))
       )
   }
-
+  
   object LoginCustomer {
     val logincustomer = exec(http("Request Name = Login Customer PUT")
-      .put("http://127.0.0.1:80/api/v1/customer/login")
+      .put("http://${IGW}:80/api/v1/customer/login")
       .header("content-type" , "application/json")
-      .body(StringBody(string = """{   "uid": "${customer_id}" }"""))
+      .body(StringBody(string = """{   "cid": "${customer_id}" }"""))
       .check(bodyString.saveAs("ResponseTokenLogin"))
       )
   }
 
   object LogoffCustomer {
     val logoffcustomer = exec(http("Request Name = Logoff Customer PUT")
-      .put("http://127.0.0.1:80/api/v1/customer/logoff")
+      .put("http://${IGW}:80/api/v1/customer/logoff")
       .header("content-type" , "application/json")
       .body(StringBody(string = """{   "jwt": "${ResponseTokenLogin}" }"""))
       .check(bodyString.saveAs("ResponseTokenLogoff"))
@@ -64,27 +66,27 @@ class BasicSimulation extends Simulation {
 
   object UpdateCustomer {
     val updatecustomer = exec(http("Request Name = Update Customer PUT")
-      .put("http://127.0.0.1:80/api/v1/customer/${customer_id}")
+      .put("http://${IGW}:80/api/v1/customer/${customer_id}")
       .header("content-type" , "application/json")
       .header("authorization", "ResponseTokenLogin")
       .body(StringBody(string = """{  "fname": "updated" ,"email": "updated","lname": "updated" }"""))
-      .check(bodyString.saveAs("ResponseTokenUpdateCustomer"))
+      //.check(bodyString.saveAs("ResponseTokenUpdateCustomer"))
       )
   }
 
   object DeleteCustomer {
     val deletecustomer = exec(http("Request Name = Delete Customer DELETE")
-      .delete("http://127.0.0.1:80/api/v1/customer/${customer_id}")
+      .delete("http://${IGW}:80/api/v1/customer/${customer_id}")
       .header("authorization", "ResponseTokenLogin")
-      .check(bodyString.saveAs("ResponseTokenDeleteCustomer"))
+      //.check(bodyString.saveAs("ResponseTokenDeleteCustomer"))
       )
   }
 
   object ReadCustomer {
     val readcustomer = exec(http("Request Name = Read Customer GET")
-      .get("http://127.0.0.1:80/api/v1/customer/4ab31555-ad0b-495d-bab6-531eca7b4643")
+      .get("http://${IGW}:80/api/v1/customer/4ab31555-ad0b-495d-bab6-531eca7b4643")
       .header("authorization", "ResponseTokenLogin")
-      .check(bodyString.saveAs("ResponseTokenReadCustomer"))
+      //.check(bodyString.saveAs("ResponseTokenReadCustomer"))
       )
   }
 
@@ -94,10 +96,10 @@ class BasicSimulation extends Simulation {
 
   object CreateAccount {
     val createaccount = exec(http("Request Name = Create Account POST")
-      .post("http://127.0.0.1:80/api/v1/account/")
+      .post("http://${IGW}:80/api/v1/account/")
       .header("content-type" , "application/json")
       .header("authorization", "ResponseTokenLogin")
-      .body(StringBody(string = """{  "CustomerId": "${customer_id}" ,"AccountType": "Will take random value from csv here.", "Balance": "Will take random value from feeder here." }"""))
+      .body(StringBody(string = """{  "CustomerId": "${customer_id}" ,"AccountType": "Savings", "Balance": 20000 }"""))
       .check(status.not(404), status.not(500))
       .check(jsonPath("$..account_id").ofType[String].saveAs("account_id"))
       )
@@ -105,25 +107,25 @@ class BasicSimulation extends Simulation {
 
   object UpdateAccount {
     val updateaccount = exec(http("Request Name = Update Account PUT")
-      .put("http://127.0.0.1:80/api/v1/account/${account_id}")
+      .put("http://${IGW}:80/api/v1/account/${account_id}")
       .header("content-type" , "application/json")
       .header("authorization", "ResponseTokenLogin")
-      .body(StringBody(string = """{  "Balance": "Will take UPDATED random value from feeder here." }"""))
-      .check(bodyString.saveAs("ResponseTokenUpdateAccount"))
+      .body(StringBody(string = """{  "Balance": 10000 }"""))
+      //.check(bodyString.saveAs("ResponseTokenUpdateAccount"))
       )
   }
 
   object DeleteAccount {
     val deleteaccount = exec(http("Request Name = Delete Account DELETE")
-      .delete("http://127.0.0.1:80/api/v1/account/${account_id}")
+      .delete("http://${IGW}:80/api/v1/account/${account_id}")
       .header("authorization", "ResponseTokenLogin")
-      .check(bodyString.saveAs("ResponseTokenDeleteAccount"))
+      //.check(bodyString.saveAs("ResponseTokenDeleteAccount"))
       )
   }
 
   object ReadAccount {
     val readaccount = exec(http("Request Name = Read Account GET")
-      .get("http://127.0.0.1:80/api/v1/account/${account_id}")
+      .get("http://${IGW}:80/api/v1/account/${account_id}")
       .header("authorization", "ResponseTokenLogin")
       .check(bodyString.saveAs("ResponseTokenReadAccount"))
       )
@@ -135,18 +137,19 @@ class BasicSimulation extends Simulation {
 
   object CreateTransaction {
     val createtransaction = exec(http("Request Name = Create Transaction POST")
-      .post("http://127.0.0.1:80/api/v1/transaction/")
+      .post("http://${IGW}:80/api/v1/transaction/")
       .header("content-type" , "application/json")
       .header("authorization", "ResponseTokenLogin")
-      .body(StringBody(string = """{  "AccountId": "${account_id}" ,"TransactionType": "Will take random value from csv here.", "Amount": "Will take random value from feeder here." }"""))
+      .body(StringBody(string = """{  "AccountId": "${account_id}" ,"TransactionType": "credit", "Amount": 500 }"""))
       .check(status.not(404), status.not(500))
+      //.check(bodyString.saveAs("RESPONSE BODY TRANSACTION"))
       .check(jsonPath("$..transaction_id").ofType[String].saveAs("transaction_id"))
       )
   }
 
   object DeleteTransaction {
     val deletetransaction = exec(http("Request Name = Delete Transaction DELETE")
-      .delete("http://127.0.0.1:80/api/v1/transaction/${transaction_id}")
+      .delete("http://${IGW}:80/api/v1/transaction/${transaction_id}")
       .header("authorization", "ResponseTokenLogin")
       .check(bodyString.saveAs("ResponseTokenDeleteTransaction"))
       )
@@ -154,7 +157,7 @@ class BasicSimulation extends Simulation {
 
   object ReadTransaction {
     val readtransaction = exec(http("Request Name = Read Transaction GET")
-      .get("http://127.0.0.1:80/api/v1/transaction/${transaction_id}")
+      .get("http://${IGW}:80/api/v1/account/${account_id}")
       .header("authorization", "ResponseTokenLogin")
       .check(bodyString.saveAs("ResponseTokenReadTransaction"))
       )
@@ -164,14 +167,66 @@ class BasicSimulation extends Simulation {
   ******************************************** Scenarios ****************************************************
   ******************************************************************************************************** */
 
-  // This Scenario will create a customer and save its customer_id in the session
-  val Createcustomers = scenario("Your Scenario Name is => Create customer (with Random values feeder)")
+
+  // This Scenario will 1. create a customer, 2. use its saved session customer_id to login, 
+  // and 3. use the saved bearer token for authenticating the update request. Then,
+  // 4. create account, 5. read account, 6. update account, 7. create transaction, 8. read transaction,
+  // 9. delete transaction, 10. delete account, 11. logoff customer.
+
+  val FullCoverageScenario = scenario("Your Scenario Name is => FullCoverage")
               .feed(y)
-              .exec(Createcustomer.createcustomer)
+              .exec(CreateCustomer.createcustomer)
               .exec { session =>
-                      println(session+"\n"+session("customer_id").as[String]+"\n\n")
+                      println("1. After CREATE!!!!!!\n\n"+session+"\n\n"+session("customer_id").as[String]+"\n\nDone\n\n")                  
                       session
                     }
-  setUp(Createcustomers.inject(atOncecustomers(1)))
+              .exec(LoginCustomer.logincustomer)
+              .exec { session =>
+                      println("2. After LOGIN!!!!!!\n\n"+session+"\n\n"+session("ResponseTokenLogin").as[String]+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(UpdateCustomer.updatecustomer)
+              .exec { session =>
+                      println("3. After UPDATE!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(CreateAccount.createaccount)
+              .exec { session =>
+                      println("4. After CREATE ACCOUNT!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(ReadAccount.readaccount)
+              .exec { session =>
+                      println("5. After READ ACCOUNT!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }     
+              .exec(UpdateAccount.updateaccount)
+              .exec { session =>
+                      println("6. After UPDATE ACCOUNT!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(CreateTransaction.createtransaction)
+              .exec { session =>
+                      println("7. After CREATE TRANSACTION!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(DeleteTransaction.deletetransaction)
+              .exec { session =>
+                      println("9. After DELETE TRANSACTION!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(DeleteAccount.deleteaccount)
+              .exec { session =>
+                      println("10. After DELETE ACCOUNT!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+              .exec(LogoffCustomer.logoffcustomer)
+              .exec { session =>
+                      println("11. After LOGOFF CUSTOMER!!!!!!\n\n"+session+"\n\nDone\n\n")                  
+                      session
+                    }
+
+  
+  setUp(FullCoverageScenario.inject(atOnceUsers(1)))
   
 }
