@@ -1,4 +1,4 @@
-# tprj/code for Kubernetes
+# tprj/code
 This directory holds the assets for building and deploying the banking application micro services.
 
 We have the following services:
