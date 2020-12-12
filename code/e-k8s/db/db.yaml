@@ -68,7 +68,7 @@ spec:
       serviceAccountName: svc-db
       containers:
       - name: cmpt756db
-        image: docker.io/19950627/cmpt756db:latest
+        image: docker.io/missrhea/cmpt756db:latest #docker.io/19950627/cmpt756db:latest
         imagePullPolicy: Always
         envFrom:
         - secretRef:

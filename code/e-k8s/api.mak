@@ -17,8 +17,8 @@ PODCONT=service1
 logs:
 	$(KC) logs $(PODS1) -c $(PODCONT)
 
-IGW=a6fd5e2247f1d4819a48bbc17ce5c517-1000820680.us-west-1.elb.amazonaws.com:80
-#IGW=10.107.253.229:80
+#IGW=a6fd5e2247f1d4819a48bbc17ce5c517-1000820680.us-west-1.elb.amazonaws.com:80
+IGW=127.0.0.1:80
 
 # stock body & fragment for API requests
 BODY_CUSTOMER= { \
@@ -29,7 +29,7 @@ BODY_CUSTOMER= { \
 
 BODY_TRANS= { \
   "TransactionType": "debit", \
-  "AccountId": "3b696f60-565d-4761-8361-59625ba74bef", \
+  "AccountId": "2820d384-257d-452f-84d4-720e950c3726", \
   "Amount": 350\
 } 
 

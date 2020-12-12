@@ -46,7 +46,7 @@ spec:
       serviceAccountName: svc-s2
       containers:
       - name: service2
-        image: docker.io/19950627/cmpt756t1:latest
+        image: docker.io/missrhea/cmpt756t1:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 30001

@@ -142,7 +142,7 @@ class BasicSimulation extends Simulation {
       .header("authorization", "ResponseTokenLogin")
       .body(StringBody(string = """{  "AccountId": "${account_id}" ,"TransactionType": "credit", "Amount": 500 }"""))
       .check(status.not(404), status.not(500))
-      //.check(bodyString.saveAs("RESPONSE BODY TRANSACTION"))
+      .check(bodyString.saveAs("RESPONSE BODY TRANSACTION"))
       .check(jsonPath("$..transaction_id").ofType[String].saveAs("transaction_id"))
       )
   }
@@ -167,7 +167,7 @@ class BasicSimulation extends Simulation {
   ******************************************** Scenarios ****************************************************
   ******************************************************************************************************** */
 
-
+  // Coverage Test
   // This Scenario will 1. create a customer, 2. use its saved session customer_id to login, 
   // and 3. use the saved bearer token for authenticating the update request. Then,
   // 4. create account, 5. read account, 6. update account, 7. create transaction, 8. read transaction,
@@ -226,7 +226,26 @@ class BasicSimulation extends Simulation {
                       session
                     }
 
-  
-  setUp(FullCoverageScenario.inject(atOnceUsers(1)))
+  // Uncomment the next line to run a Coverage Test
+  //setUp(FullCoverageScenario.inject(atOnceUsers(1)))
+
+
+  // Load Test
+  val LoadTestScenario = scenario("Your Scenario Name is => LoadTest")
+              .forever(){
+              feed(y)
+              .exec(CreateCustomer.createcustomer)
+              .exec(LoginCustomer.logincustomer)
+              .exec(UpdateCustomer.updatecustomer)
+              .exec(CreateAccount.createaccount)
+              .exec(ReadAccount.readaccount) 
+              .exec(UpdateAccount.updateaccount)
+              .exec(CreateTransaction.createtransaction)
+              .exec(DeleteTransaction.deletetransaction)
+              .exec(DeleteAccount.deleteaccount)
+              .exec(DeleteCustomer.deletecustomer)
+              }
+  // Uncomment the next line to run a Load Test for 30 minutes
+  //setUp(LoadTestScenario.inject(atOnceUsers(50))).maxDuration(30 minutes)
   
 }
