@@ -118,7 +118,7 @@ License
 Project by SFU Grad Students 
 
 
-**I hope you've enjoyed this innovative architectural and design pattern for digit banking **
+**I hope you've enjoyed this innovative architectural and design pattern for digital banking **
 
 
    
